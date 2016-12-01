@@ -1,0 +1,27 @@
+version: '2'
+services:
+    mysql:
+        container_name: mariatest
+        image: mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: 7SgkH6292yqzfXjQSY3B
+            MYSQL_USER: wp_db_admin
+            MYSQL_DATABASE: wp_docker_db
+            MYSQL_PASSWORD: 123123
+        ports:
+            - "127.0.0.1:3306:3306"
+        volumes:
+            - ./database:/home
+    wordpress:
+        container_name: wordtest
+        image: wordpress:4.6.1-apache
+        links:
+            - mysql
+        environment:
+            WORDPRESS_DB_USER: wp_db_admin
+            WORDPRESS_DB_NAME: wp_docker_db
+            WORDPRESS_DB_PASSWORD: 123123
+        ports:
+            - "127.0.0.1:80:80"
+        volumes:
+            - ./www:/var/www/html
